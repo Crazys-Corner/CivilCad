@@ -39,7 +39,8 @@ $mysqli = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword);
 
 // Check if the connection was successful
 if ($mysqli->connect_errno) {
-    echo "Failed to connect to MySQL: " . $mysqli->connect_error;
+    $errorMessage = "Failed to connect to MySQL: " . $mysqli->connect_error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
     exit;
 }
 
@@ -47,7 +48,8 @@ if ($mysqli->connect_errno) {
 $dbExists = $mysqli->select_db(DatabaseName);
 
 if (!$dbExists) {
-    echo "Error: The specified database does not exist.";
+    $errorMessage = "Error: The specified database does not exist.";
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
     exit;
 }
 
@@ -65,11 +67,17 @@ $createTableSQL = "CREATE TABLE IF NOT EXISTS users (
 if ($mysqli->query($createTableSQL) === TRUE) {
     echo "Table 'users' created successfully.";
 } else {
-    echo "Error creating table: " . $mysqli->error;
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
 }
 
 // Close the MySQL connection
 $mysqli->close();
+
+header("Location: setupsuccess.php");
+exit;
+
 
     // Delete the setup.php file 
    // unlink('setup.php'); (commented out due to testing)
