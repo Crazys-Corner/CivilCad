@@ -1,8 +1,11 @@
-<?php
-// Step 1: Start the session
+<?php 
+include("config.php");
 session_start();
 
-// Step 2: Set the session variable
+$moneyInServer = 400; // <--- This is a variable 
+
+$Players = 
+
 $_SESSION['username'] = 'JohnDoe'; 
 
 define('SERVER_NAME', 'AOC RP');
@@ -405,8 +408,8 @@ define('SERVER_NAME', 'AOC RP');
                                     <div class="stat-icon dib"><i class="ti-money color-success border-success"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">Total Profit</div>
-                                        <div class="stat-digit">1,012</div>
+                                        <div class="stat-text">Money In Server</div>
+                                        <div class="stat-digit"><?php echo number_format($moneyInServer); ?></div>
                                     </div>
                                 </div>
                             </div>
@@ -417,8 +420,8 @@ define('SERVER_NAME', 'AOC RP');
                                     <div class="stat-icon dib"><i class="ti-user color-primary border-primary"></i>
                                     </div>
                                     <div class="stat-content dib">
-                                        <div class="stat-text">New Customer</div>
-                                        <div class="stat-digit">961</div>
+                                        <div class="stat-text">Players</div>
+                                        <div class="stat-digit"><?php echo number_format($Players); ?></div>
                                     </div>
                                 </div>
                             </div>
