@@ -4,7 +4,7 @@ session_start();
 
 $moneyInServer = 400; // <--- This is a variable 
 
-$Players = 
+$Players = 50; 
 
 $_SESSION['username'] = 'JohnDoe'; 
 
