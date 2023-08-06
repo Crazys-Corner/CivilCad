@@ -2,7 +2,6 @@
 ob_start();
 session_start(); 
 
-
 include("verify.php");
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
@@ -39,7 +38,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             }
 
             // set session variables
-}           $_SESSION['username'] = $row['username'];
+            $_SESSION['username'] = $row['username'];
             $_SESSION['name'] = $row['name'];
             $_SESSION['id'] = $row['id'];
 
@@ -55,7 +54,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
             exit();
         }
     }
- elseif (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+} elseif (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
     $username = $_COOKIE['username'];
     $pass = $_COOKIE['password'];
 
