@@ -1,3 +1,6 @@
+<?php 
+require("verify.php");
+require("banking-backend.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
