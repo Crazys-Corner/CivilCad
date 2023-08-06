@@ -7,7 +7,7 @@ if (!file_exists("Config.php")) {
     exit();
 }
 // Require Config for dependencies, and other things. 
-Require("config.php");
+Require_once("config.php");
 
 // Check if valid license key.
 // Require("verification.php");
