@@ -160,3 +160,46 @@ body {
 .auth-options button:hover {
   background-color: #0056b3;
 }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  background-color: #333;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+form {
+  margin: 20px;
+}
+
+label {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+input[type="text"] {
+  border: 1px solid #ccc;
+  font-size: 1.2em;
+  padding: 10px;
+  width: calc(100% - 24px);
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2em;
+  margin-top: 20px;
+  padding: 10px 20px;
+}
+
+input[type="submit"]:hover {
+  background-color: #3e8e41;
+}
