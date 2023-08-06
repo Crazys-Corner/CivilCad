@@ -1,6 +1,3 @@
-<?php 
-require("monkey.php")
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,6 +8,7 @@ require("monkey.php")
 </head>
 <body>
   <div class="container">
+    <div id="login-failed-div">Login Failed</div>
     <form class="auth-form">
       <h2>Login</h2>
       <label for="username">Username:</label>
@@ -23,5 +21,18 @@ require("monkey.php")
       </div>
     </form>
   </div>
+  <script>function loginFailed() {
+  var loginFailedDiv = document.getElementById("login-failed-div");
+  loginFailedDiv.style.visibility = "visible";
+  loginFailedDiv.style.top = "5vh";
+  setTimeout(function() {
+    loginFailedDiv.style.top = "-30vh";
+    setTimeout(function() {
+      loginFailedDiv.style.visibility = "hidden"; 
+    }, 5000);
+  }, 5000);
+  
+  }
+  </script>
 </body>
 </html>

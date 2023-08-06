@@ -1,0 +1,80 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .auth-form {
+    width: 15vw;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .auth-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .auth-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form-input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .remember-me {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 5px;
+  }
+  
+  .remember-me input[type="checkbox"] {
+    margin-right: 5px;
+  }
+  
+  .auth-form button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .auth-form button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  #signup-failed-div {
+    position: absolute;
+    visibility: hidden;
+    top: -30vh;
+    background-color: white;
+    width: 15vw;
+    border-radius: 30px;
+    font-size: 2rem;
+    text-align: center;
+    padding: 5px;
+    color: red;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transition: 1s
+  }

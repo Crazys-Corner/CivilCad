@@ -1,7 +1,7 @@
 <?php 
 require("verify.php");
 // require("banking-backend.php");
-$_SESSION["64id"] === 1234;
+$_SESSION["64id"] = "1234";
 $id = $_SESSION["64id"];
 ?>
 <!DOCTYPE html>
