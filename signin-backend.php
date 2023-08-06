@@ -2,6 +2,22 @@
 ob_start();
 session_start(); 
 
+// Check if the user is already logged in
+if (!isset($_SESSION['user_id'])) {
+    // Generate a unique user ID
+    $user_id = uniqid();
+    
+    // Store the user ID in the session
+    $_SESSION['user_id'] = $user_id;
+    
+    // Insert the user into the database
+    $sql = "INSERT INTO users (id) VALUES ('$user_id')";
+    if (!$conn->query($sql)) {
+        echo "Error inserting user into database: " . $conn->error;
+    }
+}
+
+
 include("verify.php");
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
