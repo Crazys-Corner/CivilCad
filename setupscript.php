@@ -56,12 +56,39 @@ if (!$dbExists) {
 // If the database exists, continue with table creation
 // Create your tables here using SQL queries
 // For example, create a users table
-$createTableSQL = "CREATE TABLE IF NOT EXISTS users (
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL
-)";
+);
+
+CREATE TABLE IF NOT EXISTS CB (
+    owner INT NOT NULL,
+    personalAccountNumber INT NOT NULL,
+    balance INT NOT NULL,
+    easySend INT NOT NULL
+);
+
+CREATE TABLE threads (
+    thread_id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE comments (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    thread_id INT NOT NULL,
+    content TEXT NOT NULL,
+    author VARCHAR(50) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (thread_id) REFERENCES threads (thread_id) ON DELETE CASCADE
+);
+";
+
 
 // Execute the table creation query
 if ($mysqli->query($createTableSQL) === TRUE) {

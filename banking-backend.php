@@ -42,8 +42,6 @@ if ($result) {
 
 // Close the database connection
 $conn->close();
-// u here
-// yes
 
 
 

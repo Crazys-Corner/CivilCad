@@ -8,7 +8,7 @@ $key = constant('ProductKey');
 
 // Make sure it isn't pirated 
 // Connect to Licensing Database 
-$mysqli = new mysqli("107.178.115.103:3306", "civilhos_whmc849", "Ge.[!17Sp3.gF27@!z0i4X@Ta", "civilhos_whmc849");
+$mysqli = new mysqli("107.178.115.103:3306", "", "", "");
 
 if ($mysqli->connect_errno) {
     $errorMessage = "Failed to connect to Key Server.";
