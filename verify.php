@@ -10,6 +10,6 @@ if (!file_exists("Config.php")) {
 Require("config.php");
 
 // Check if valid license key.
-Require("verification.php");
+// Require("verification.php");
 
 ?>
