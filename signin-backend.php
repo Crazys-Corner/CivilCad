@@ -1,7 +1,7 @@
 <?php 
 
 // Page Dependency 
-include(verify.php);
+include("verify.php");
 
 session_start();
 
@@ -40,8 +40,8 @@ function loginUser($username, $password) {
         $_SESSION['user_id'] = $row['id'];
         $_SESSION['cadusername'] = $row['username'];
         $_SESSION['cademail'] = $row['email'];
-        $_SESSION['64id'] = $row['64id'];
-        global $steamid = $_SESSION['64id'];
+        $_SESSION['64id'] = $row['id64'];
+        $steamid = $_SESSION['64id'];
         // Set Session Variables here ^^
        
         return true;

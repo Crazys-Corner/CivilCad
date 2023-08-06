@@ -62,34 +62,73 @@ CREATE TABLE IF NOT EXISTS users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    64id VARCHAR(255)
-);
+    id64 VARCHAR(255)
+);";
+// Execute the table creation query
+if ($mysqli->query($createTableSQL) === TRUE) {
+    echo "Table 'users' created successfully.";
+} else {
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
+}
 
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    64id VARCHAR(255)
+);";
+// Execute the table creation query
+if ($mysqli->query($createTableSQL) === TRUE) {
+    echo "Table 'users' created successfully.";
+} else {
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
+}
+$createTableSQL = "
 CREATE TABLE IF NOT EXISTS CB (
     owner INT NOT NULL,
     personalAccountNumber INT NOT NULL,
     balance INT NOT NULL,
     easySend INT NOT NULL
-);
-
-CREATE TABLE threads (
+);";
+// Execute the table creation query
+if ($mysqli->query($createTableSQL) === TRUE) {
+    echo "Table 'users' created successfully.";
+} else {
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
+}
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS threads (
     thread_id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     author VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE comments (
+);";
+// Execute the table creation query
+if ($mysqli->query($createTableSQL) === TRUE) {
+    echo "Table 'users' created successfully.";
+} else {
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
+}
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS comments (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
     thread_id INT NOT NULL,
     content TEXT NOT NULL,
     author VARCHAR(50) NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (thread_id) REFERENCES threads (thread_id) ON DELETE CASCADE
-);
-";
-
+);" ;
 
 // Execute the table creation query
 if ($mysqli->query($createTableSQL) === TRUE) {
@@ -99,6 +138,7 @@ if ($mysqli->query($createTableSQL) === TRUE) {
     header("Location: setupfail.php?error=" . urlencode($errorMessage));
     exit;
 }
+
 
 // Close the MySQL connection
 $mysqli->close();

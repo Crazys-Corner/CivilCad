@@ -6,7 +6,7 @@ session_start();
 // Function to get the total balance of a user account
 function getUserTotalBalance($userId, $conn) {
     // Prepare the SQL query
-    $sql = "SELECT SUM(balance) AS total_balance FROM CB WHERE owner = $userId";
+    $sql = "SELECT balance FROM CB WHERE owner = '$userId'";
 
     // Execute the query
     $result = $conn->query($sql);
@@ -17,7 +17,7 @@ function getUserTotalBalance($userId, $conn) {
         if ($result->num_rows > 0) {
             // Fetch the result as an associative array
             $row = $result->fetch_assoc();
-            $total_balance = number_format($row["total_balance"]);
+            $total_balance = number_format($row["balance"]);
             return $total_balance;
         } else {
             return 0;
@@ -40,7 +40,7 @@ if ($conn->connect_error) {
 $user_id = $_SESSION['64id']; // Replace 123 with the user's ID
 
 // Get the user's total balance
-$total_balance = getUserTotalBalance($user_id, $conn);
+$balance = getUserTotalBalance($user_id, $conn);
 
 // Close the database connection
 $conn->close();
@@ -65,21 +65,22 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
     }
 
 }
-
-function bankQuery(){
-    $sql = "SELECT * FROM CB WHERE owner='" . $_SESSION['64id'] . "'";
-$result = $conn->query($sql);
+/* function bankQuery(){
+    $sql = "SELECT * FROM CB WHERE owner='$user_id'";
+  $result = $conn->query($sql);
     if ($result->num_rows === 1){
             // Fetch CB Table data
         $row = $result->fetch_assoc();
             // Set CB Session Vars here, for banking module. 
-
+  
     $_SESSION['personalAccountNumber'] = $row['personalAccountNumber'];
     $_SESSION['balance'] = $row['balance'];
-    $_SESSION['cbEasySend'] = $row['easySend'];        
+    $_SESSION['cbEasySend'] = $row['easySend']; 
+    $balance = $_SESSION['balance'];       
         
     } else {
         // CB Connection / Login Failed
             return false;
     }
-} 
+  } 
+*/

@@ -8,8 +8,10 @@
 </head>
 <body>
   <div class="container">
-    <div id="login-failed-div">Login Failed</div>
-    <form class="auth-form">
+    <?php if (!empty($error)) : ?>
+      <div id="login-failed-div"><?php echo $error; ?></div>
+    <?php endif; ?>
+    <form class="auth-form" method="post" action="login-action.php">
       <h2>Login</h2>
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
@@ -21,18 +23,18 @@
       </div>
     </form>
   </div>
-  <script>function loginFailed() {
-  var loginFailedDiv = document.getElementById("login-failed-div");
-  loginFailedDiv.style.visibility = "visible";
-  loginFailedDiv.style.top = "5vh";
-  setTimeout(function() {
-    loginFailedDiv.style.top = "-30vh";
-    setTimeout(function() {
-      loginFailedDiv.style.visibility = "hidden"; 
-    }, 5000);
-  }, 5000);
-  
-  }
+  <script>
+    function loginFailed() {
+      var loginFailedDiv = document.getElementById("login-failed-div");
+      loginFailedDiv.style.visibility = "visible";
+      loginFailedDiv.style.top = "5vh";
+      setTimeout(function() {
+        loginFailedDiv.style.top = "-30vh";
+        setTimeout(function() {
+          loginFailedDiv.style.visibility = "hidden"; 
+        }, 5000);
+      }, 5000);
+    }
   </script>
 </body>
 </html>
