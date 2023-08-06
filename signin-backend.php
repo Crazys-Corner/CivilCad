@@ -34,7 +34,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 
             // check if user has admin and developer permissions
             if ($row['is_admin'] == 1 && $row['is_developer'] == 1) {
-                header("Location: adminhome.php");
+                header("Location: bank.php");
                 exit();
             }
 
@@ -48,14 +48,14 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 setcookie('password', $pass, time() + (86400 * 30));
             }
 
-            header("Location: ../customer/home.php");
+            header("Location: bank.php");
             exit();
         } else {
             header("Location: login.php?error=Incorrect User name or password");
             exit();
         }
     }
-} elseif (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
+ elseif (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
     $username = $_COOKIE['username'];
     $pass = $_COOKIE['password'];
 
