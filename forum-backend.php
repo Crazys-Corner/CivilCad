@@ -1,7 +1,7 @@
 <?php 
 
 require("verify.php"); 
-
+// this is a test commit
 // Function to establish a database connection
 function getDBConnection() {
     $conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
