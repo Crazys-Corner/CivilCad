@@ -1,84 +1,81 @@
 <?php 
-ob_start();
-session_start(); 
 
+// Page Dependency 
+include(verify.php);
 
-include("verify.php");
+session_start();
 
-if (isset($_POST['username']) && isset($_POST['password'])) {
-
-    // validate and sanitize input data
-    function validate($data){
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    $username = strtolower(validate($_POST['username']));
-    $pass = validate($_POST['password']);
-
-    if (empty($username)) {
-        header("Location: loginpage.php?error=User Name is required");
-        exit();
-    } else if (empty($pass)){
-        header("Location: loginpage.php?error=Password is required");
-        exit();
-    } else {
-        // fetch user data from the database
-        $sql = "SELECT * FROM accounts WHERE username='$username' AND password='$pass'";
-        $result = mysqli_query($conn, $sql);
-
-        if (mysqli_num_rows($result) === 1) {
-            $row = mysqli_fetch_assoc($result);
-
-            // check if user has admin and developer permissions
-            if ($row['is_admin'] == 1 && $row['is_developer'] == 1) {
-                header("Location: bank.php");
-                exit();
-            }
-
-            // set session variables
-}           $_SESSION['username'] = $row['username'];
-            $_SESSION['name'] = $row['name'];
-            $_SESSION['id'] = $row['id'];
-
-            if ($remember) {
-                setcookie('username', $username, time() + (86400 * 30)); // 30 days
-                setcookie('password', $pass, time() + (86400 * 30));
-            }
-
-            header("Location: bank.php");
-            exit();
-        } else {
-            header("Location: login.php?error=Incorrect User name or password");
-            exit();
-        }
-    }
- elseif (isset($_COOKIE['username']) && isset($_COOKIE['password'])) {
-    $username = $_COOKIE['username'];
-    $pass = $_COOKIE['password'];
-
-    $sql = "SELECT * FROM accounts WHERE username='$username' AND password='$pass'";
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-
-        // check if user has admin and developer permissions
-        
-
-        // set session variables
-        $_SESSION['username'] = $row['username'];
-        $_SESSION['name'] = $row['name'];
-        $_SESSION['id'] = $row['id'];
-
-        header("Location: ../customer/home.php");
-        exit();
-    }
-} else {
-    header("Location: index.php");
-    exit();
+// Function to check if the user is already logged in
+function isUserLoggedIn() {
+    return isset($_SESSION['user_id']);
 }
 
-ob_end();
+function loginUser($username, $password) {
+
+    $conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
+
+    // Check for a successful connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+// Sanitize input to prevent SQL injection
+
+    $username = $conn->real_escape_string($username);
+    $password = $conn->real_escape_string($password);
+
+    // Perform Query to check if the user exists and the password is correct
+
+    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    $result = $conn->query($sql);
+
+    // Check if matching row / success
+
+        if ($result->num_rows === 1){
+            // fetch the user id and store it in session to indicate success
+        $row = $result->fetch_assoc();
+       
+        // Set Session variables here VV Only works from users table
+
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['cadusername'] = $row['username'];
+        $_SESSION['cademail'] = $row['email'];
+        $_SESSION['64id'] = $row['64id'];
+        global $steamid = $_SESSION['64id'];
+        // Set Session Variables here ^^
+       
+        return true;
+        } else {
+            // Login Failed
+            return false;
+        }
+
+    
+    // Close DB Conn
+
+    $conn->close(); 
+// Function to handle user logout
+function logoutUser() {
+// Destroy Session to log out.
+session_destroy();
+
+}
+function bankQuery(){
+    $sql = "SELECT * FROM CB WHERE owner='" . $_SESSION['64id'] . "'";
+$result = $conn->query($sql);
+    if ($result->num_rows === 1){
+            // Fetch CB Table data
+        $row = $result->fetch_assoc();
+            // Set CB Session Vars here, for banking module. 
+
+    $_SESSION['personalAccountNumber'] = $row['personalAccountNumber'];
+    $_SESSION['balance'] = $row['balance'];
+    $_SESSION['cbEasySend'] = $row['easySend'];        
+        
+    } else {
+        // CB Connection / Login Failed
+            return false;
+    }
+}  
+}
+?>
