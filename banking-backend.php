@@ -2,6 +2,7 @@
 // Page Dependency.
 require("verify.php");
 session_start();
+if(isset($_SESSION['64id'])) {
 
 // Function to get the total balance of a user account
 function getUserTotalBalance($userId, $conn) {
@@ -83,4 +84,9 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
             return false;
     }
   } 
-*/
+*/ }
+else {
+
+    header("location: login.php");
+
+}
