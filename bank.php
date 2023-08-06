@@ -1,7 +1,7 @@
 <?php 
 require("verify.php");
-require("banking-backend.php");
-$_SESSION["64id"] = 1234;
+// require("banking-backend.php");
+$_SESSION["64id"] === 1234;
 $id = $_SESSION["64id"];
 ?>
 <!DOCTYPE html>
@@ -21,7 +21,7 @@ $id = $_SESSION["64id"];
     <div class="dashboard">
       <h1>Welcome, Ziad Gold</h1>
       <div class="account-details">
-        <h2>Your ID: <?php echo $id; ?></h2>
+        <h2>Your ID: <?php echo "$id"; ?></h2>
         <div class="balance">
           <h2>Your Balance: $<span id="balance">1000</span></h2>
         </div>

@@ -37,7 +37,7 @@ if ($conn->connect_error) {
 }
 
 // Replace 'user_id' with the actual identifier of the user you want to get the balance for
-$user_id = $_SESSION['64id']; // Replace 123 with the user's ID
+// $user_id = $_SESSION['64id']; // Replace 123 with the user's ID
 
 // Get the user's total balance
 $total_balance = getUserTotalBalance($user_id, $conn);
