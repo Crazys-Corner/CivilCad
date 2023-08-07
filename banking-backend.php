@@ -47,24 +47,30 @@ $balance = getUserTotalBalance($user_id, $conn);
 
 function transferMoney($fromUserId, $toUserId, $amount, $conn) { 
     // Check if the 'from user' has enough balance
-
     $from_balance = getUserTotalBalance($fromUserId, $conn);
     if ($from_balance >= $amount) {
 
-        $sql = "UPDATE CB SET balance = balance - $amount WHERE owner = $fromUserId";
-        $conn->query($sql);
+        // Use prepared statements to prevent SQL injection
+        $sql = "UPDATE CB SET balance = balance - ? WHERE owner = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $amount, $fromUserId);
+        $stmt->execute();
+        $stmt->close();
 
-        $sql = "UPDATE CB SET balance = balance + $amount WHERE owner = $toUserId";
-        $conn->query($sql);
+        $sql = "UPDATE CB SET balance = balance + ? WHERE owner = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("di", $amount, $toUserId);
+        $stmt->execute();
+        $stmt->close();
 
-    return true; // Successful Tranfer
+        return "Money sent to $toUserId"; // Successful Transfer
     
     } else {
        
-        return false;
-         // Not enough balance for transfer
+        return "Not enough balance for transfer";
     }
 }
+
 
 /* function bankQuery(){
     $sql = "SELECT * FROM CB WHERE owner='$user_id'";
