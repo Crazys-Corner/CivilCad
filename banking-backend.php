@@ -3,7 +3,13 @@
 require("verify.php");
 session_start();
 if(isset($_SESSION['64id'])) {
+// Establish a database connection
+$conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
 
+// Check if the connection was successful
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
 // Function to get the total balance of a user account
 function getUserTotalBalance($userId, $conn) {
     // Prepare the SQL query
@@ -23,18 +29,12 @@ function getUserTotalBalance($userId, $conn) {
         } else {
             return 0;
         }
+
     } else {
         echo "Error executing the query: " . $conn->error;
+
         return null;
     }
-}
-
-// Establish a database connection
-$conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
-
-// Check if the connection was successful
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
 }
 
 // Replace 'user_id' with the actual identifier of the user you want to get the balance for
@@ -42,9 +42,6 @@ $user_id = $_SESSION['64id']; // Replace 123 with the user's ID
 
 // Get the user's total balance
 $balance = getUserTotalBalance($user_id, $conn);
-
-// Close the database connection
-$conn->close();
 
 
 
@@ -59,13 +56,16 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
 
         $sql = "UPDATE CB SET balance = balance + $amount WHERE owner = $toUserId";
         $conn->query($sql);
-     
-    return true; // Successful Tranfer
-    } else {
-        return false; // Not enough balance for transfer
-    }
 
+    return true; // Successful Tranfer
+    
+    } else {
+       
+        return false;
+         // Not enough balance for transfer
+    }
 }
+
 /* function bankQuery(){
     $sql = "SELECT * FROM CB WHERE owner='$user_id'";
   $result = $conn->query($sql);
@@ -84,7 +84,13 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
             return false;
     }
   } 
-*/ }
+*/ 
+
+// Close the database connection
+
+
+
+}
 else {
 
     header("location: login.php");

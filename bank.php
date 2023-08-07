@@ -13,8 +13,8 @@ require("banking-backend.php");
 <body>
   <div class="container">
     <div class="header">
-      <a class="button-link" href="login">Login</a>
-      <a class="button-link" href="signup">Signup</a>
+      <a class="button-link" href="login.php">Login</a>
+      <a class="button-link" href="signup.php">Signup</a>
     </div>
     <div class="dashboard">
       <h1>Welcome, Ziad Gold</h1>
@@ -26,9 +26,9 @@ require("banking-backend.php");
       </div>
       <div class="transfer-form">
         <h2>Transfer Money</h2>
-        <form id="transferForm">
+        <form id="transferForm" method="post" action="banking-transfer.php">
           <label for="recipient">Recipient:</label>
-          <input type="text" id="recipient" name="recipient" required>
+          <input type="text" id="recipient" name="toUserId" required>
           <label for="amount">Amount:</label>
           <input type="number" id="amount" name="amount" min="1" required>
           <button type="submit">Transfer</button>

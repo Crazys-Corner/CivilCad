@@ -1,7 +1,7 @@
 <?php 
 
 // Page Dependency 
-include("verify.php");
+require("verify.php");
 
 session_start();
 
