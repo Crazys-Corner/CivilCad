@@ -45,7 +45,7 @@ $balance = getUserTotalBalance($user_id, $conn);
 
 
 
-function transferMoney($fromUserId, $toUserId, $amount, $conn) { 
+function transferMoney($fromUserId, $recipientId, $amount, $conn) { 
     // Check if the 'from user' has enough balance
     $from_balance = getUserTotalBalance($fromUserId, $conn);
     if ($from_balance >= $amount) {
@@ -59,11 +59,11 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
 
         $sql = "UPDATE CB SET balance = balance + ? WHERE owner = ?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("di", $amount, $toUserId);
+        $stmt->bind_param("di", $amount, $recipientId);
         $stmt->execute();
         $stmt->close();
 
-        return "Money sent to $toUserId"; // Successful Transfer
+        return "Money sent to $recipientId"; // Successful Transfer
     
     } else {
        
@@ -71,6 +71,19 @@ function transferMoney($fromUserId, $toUserId, $amount, $conn) {
     }
 }
 
+function getRecipientName($recipientId, $conn) {
+    $sql = "SELECT owner FROM CB WHERE owner = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $recipientId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($row = $result->fetch_assoc()) {
+        return $row['owner'];
+    }
+
+    return "Unknown Recipient"; // Default name if recipient not found
+}
 
 /* function bankQuery(){
     $sql = "SELECT * FROM CB WHERE owner='$user_id'";

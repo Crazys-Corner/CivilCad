@@ -37,10 +37,19 @@ require("banking-backend.php");
       <div class="transaction-history">
         <h2>Transaction History</h2>
         <div class="transactions">
-          <div class="transaction">Sent $1000 to John</div>
-          <div class="transaction">Received $500 from Jane</div>
-          <div class="transaction">Sent $200 to Alex</div>
-      
+        <?php
+            $sql = "SELECT description FROM transactions WHERE user_id = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("i", $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="transaction">' . $row['description'] . '</div>';
+            }
+            
+            $stmt->close();
+        ?>
           <!-- Add more transaction items here -->
         </div>
       </div>

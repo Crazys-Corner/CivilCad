@@ -1,10 +1,22 @@
 <?php
 require("verify.php");
-require_once("banking-backend.php");
-$toUserId = $_POST['toUserId'];
-$amount = $_POST['amount'];
-$fromUserId = $_SESSION['64id'];
+require("banking-backend.php");
 
-transferMoney($fromUserId, $toUserId, $amount, $conn); 
-header("location: bank.php");
+// Assuming you have a function to perform the transfer and get recipient's name, like getRecipientName($recipientId, $conn)
+$recipientName = getRecipientName($_POST['toUserId'], $conn);
+$transactionDescription = "Sent $" . $_POST['amount'] . " to " . $recipientName;
+
+// Perform the transfer and update the transaction history in the database
+if (transferMoney($user_id, $_POST['toUserId'], $_POST['amount'], $conn)) {
+    // Insert the transaction into the database
+    $sql = "INSERT INTO transactions (user_id, description) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $user_id, $transactionDescription);
+    $stmt->execute();
+    $stmt->close();
+    
+    header("Location: bank.php");
+} else {
+    echo "Transfer failed.";
+}
  ?>
