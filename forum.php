@@ -1,5 +1,7 @@
 <?php 
-require("forum-backend.php"); ?>
+require("forum-backend.php"); 
+require ("verify.php");
+?>
 <!DOCTYPE html>
 <html>
 <head>

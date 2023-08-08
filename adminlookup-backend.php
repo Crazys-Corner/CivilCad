@@ -1,6 +1,7 @@
 <?php
 // Include the db_connection.php script to establish a database connection
 include("db_connection.php");
+require ("verify.php");
 
 // Check if the form was submitted
 if (isset($_POST['username'])) {

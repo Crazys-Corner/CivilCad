@@ -1,3 +1,6 @@
+<?php
+require ("verify.php");
+?>
 <!DOCTYPE html>
 <html>
     <head>

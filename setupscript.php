@@ -1,4 +1,5 @@
 <?php
+require ("verify.php");
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $DatabaseName = $_POST['database-name'];
     $DatabaseUsername = $_POST['database-username'];

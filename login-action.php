@@ -1,4 +1,5 @@
 <?php
+require ("verify.php");
 // Include the login script functions
 require_once 'signin-backend.php';
 

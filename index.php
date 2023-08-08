@@ -1,5 +1,6 @@
 <?php 
 include("config.php");
+require ("verify.php");
 session_start();
 
 $moneyInServer = 400; // <--- This is a variable 
