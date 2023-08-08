@@ -36,7 +36,7 @@ if (isset($steam64ID)) {
         // Steam 64ID already registered
         echo "Account already exists";
         $conn->close();
-        header("Location: sign-in.php");
+        header("Location: login.php");
         exit;
     } else {
         // Insert the Steam 64ID into the 'users' table
