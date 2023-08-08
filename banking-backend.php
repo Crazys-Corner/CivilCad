@@ -44,7 +44,6 @@ $user_id = $_SESSION['64id']; // Replace 123 with the user's ID
 $balance = getUserTotalBalance($user_id, $conn);
 
 
-
 function transferMoney($fromUserId, $recipientId, $amount, $conn) { 
     // Check if the 'from user' has enough balance
     $from_balance = getUserTotalBalance($fromUserId, $conn);
@@ -63,13 +62,30 @@ function transferMoney($fromUserId, $recipientId, $amount, $conn) {
         $stmt->execute();
         $stmt->close();
 
-        return "Money sent to $recipientId"; // Successful Transfer
+        // Insert successful transfer transaction record
+        $transactionDescription = "Sent $" . $amount . " to User " . $recipientId;
+        insertTransaction($fromUserId, $transactionDescription, $conn);
+
+        return true; // Successful Transfer
     
     } else {
        
-        return "Not enough balance for transfer";
+        // Insert failed transfer transaction record
+        $transactionDescription = "Failed transfer attempt - Insufficient balance";
+        insertTransaction($fromUserId, $transactionDescription, $conn);
+
+        return false;
     }
 }
+
+function insertTransaction($userId, $description, $conn) {
+    $sql = "INSERT INTO transactions (user_id, description) VALUES (?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("is", $userId, $description);
+    $stmt->execute();
+    $stmt->close();
+}
+
 
 function getRecipientName($recipientId, $conn) {
     $sql = "SELECT owner FROM CB WHERE owner = ?";
@@ -84,7 +100,6 @@ function getRecipientName($recipientId, $conn) {
 
     return "Unknown Recipient"; // Default name if recipient not found
 }
-
 /* function bankQuery(){
     $sql = "SELECT * FROM CB WHERE owner='$user_id'";
   $result = $conn->query($sql);

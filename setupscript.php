@@ -120,6 +120,20 @@ if ($mysqli->query($createTableSQL) === TRUE) {
     header("Location: setupfail.php?error=" . urlencode($errorMessage));
     exit;
 }
+
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS transactions (
+    user_id VARCHAR(255),
+    description VARCHAR(255)
+);";
+// Execute the table creation query
+if ($mysqli->query($createTableSQL) === TRUE) {
+    echo "Table 'users' created successfully.";
+} else {
+    $errorMessage = "Error creating table: " . $mysqli->error;
+    header("Location: setupfail.php?error=" . urlencode($errorMessage));
+    exit;
+}
 $createTableSQL = "
 CREATE TABLE IF NOT EXISTS comments (
     comment_id INT AUTO_INCREMENT PRIMARY KEY,
