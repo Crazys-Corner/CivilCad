@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-// Page Dependency 
+// Page Dependency
 require("verify.php");
 session_start();
 
@@ -9,8 +9,8 @@ function isUserLoggedIn() {
     return isset($_SESSION['user_id']);
 }
 
+// Function to handle user login
 function loginUser($username, $password) {
-
     $conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
 
     // Check for a successful connection
@@ -18,49 +18,45 @@ function loginUser($username, $password) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-// Sanitize input to prevent SQL injection
-
+    // Sanitize input to prevent SQL injection
     $username = $conn->real_escape_string($username);
-    $password = $conn->real_escape_string($password);
 
-    // Perform Query to check if the user exists and the password is correct
-
-    $sql = "SELECT * FROM users WHERE username='$username' AND password='$password'";
+    // Perform Query to check if the user exists
+    $sql = "SELECT * FROM users WHERE username='$username'";
     $result = $conn->query($sql);
 
-    // Check if matching row / success
-
-        if ($result->num_rows === 1){
-            // fetch the user id and store it in session to indicate success
+    if ($result && $result->num_rows === 1) {
         $row = $result->fetch_assoc();
-       
-        // Set Session variables here VV Only works from users table
+        $hashedPassword = $row['password'];
 
-        $_SESSION['user_id'] = $row['id'];
-        $_SESSION['cadusername'] = $row['username'];
-        $_SESSION['cademail'] = $row['email'];
-        $_SESSION['64id'] = $row['id64'];
-        $steamid = $_SESSION['64id'];
-        // Set Session Variables here ^^
-       
-        return true;
+        if (password_verify($password, $hashedPassword)) {
+            // Password is correct, set session variables
+            $_SESSION['user_id'] = $row['id'];
+            $_SESSION['cadusername'] = $row['username'];
+            $_SESSION['cademail'] = $row['email'];
+            $_SESSION['64id'] = $row['id64'];
+
+            // Close DB connection
+            $conn->close();
+            return true;
         } else {
-            // Login Failed
-            return false;
+
+            header("Location: login.php?error=Wrong%20Password");
+
+
+
         }
+    }
 
-    
-    // Close DB Conn
+    // Close DB connection
+    $conn->close();
+    return false;
+}
 
-    $conn->close(); 
 // Function to handle user logout
 function logoutUser() {
-// Destroy Session to log out.
-session_destroy();
-
+    // Destroy session to log out
+    session_destroy();
 }
 
-}
-
- 
 ?>

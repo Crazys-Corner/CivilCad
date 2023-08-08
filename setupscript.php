@@ -91,10 +91,11 @@ if ($mysqli->query($createTableSQL) === TRUE) {
 }
 $createTableSQL = "
 CREATE TABLE IF NOT EXISTS CB (
-    owner INT NOT NULL,
-    personalAccountNumber INT NOT NULL,
-    balance INT NOT NULL,
-    easySend INT NOT NULL
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    owner VARCHAR(255) UNIQUE NOT NULL,
+    personalAccountNumber VARCHAR(255) NOT NULL,
+    balance VARCHAR(255) NOT NULL,
+    easySend VARCHAR(255) NOT NULL
 );";
 // Execute the table creation query
 if ($mysqli->query($createTableSQL) === TRUE) {

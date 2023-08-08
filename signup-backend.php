@@ -1,9 +1,28 @@
 <?php
-session_start();
-
 // Page Dependency
 require("verify.php");
 
+// Ensure the script only processes POST requests
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header("HTTP/1.1 405 Method Not Allowed");
+    exit;
+}
+
+// Validate and sanitize user input
+$username = trim($_POST['username']);
+$email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+$password = $_POST['password'];
+
+// Perform more validation on the input if needed
+if (empty($username) || empty($email) || empty($password)) {
+    header("Location: setupfail.php?error=" . urlencode("Please fill in all fields."));
+    exit;
+}
+
+// Hash the password using bcrypt / default hash
+$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+// Create a new database connection
 $conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
 
 // Check for a successful connection
@@ -11,34 +30,48 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get username and password from user
-$username = $_POST['username'];
-$password = $_POST['password'];
+$steamiddefault = "unlinked";
 
-// sanitize sql to prevent sql injections
-$username = $conn->real_escape_string($username);
-$password = $conn->real_escape_string($password);
+// Prepare and execute the SQL statement using prepared statements to prevent SQL injection
+$sql = "INSERT INTO users (username, password, email, id64) VALUES (?, ?, ?, ?)";
+$stmt = $conn->prepare($sql);
 
-// Hash the password for security
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
+// Use bind_param to bind variables and prevent SQL injection
+$stmt->bind_param("ssss", $username, $hashed_password, $email, $steamiddefault);
 
-// Insert user into database
-$sql = "INSERT INTO users (username, password) VALUES ('$username', '$hashed_password')";
-$result = $conn->query($sql);
+if ($stmt->execute()) {
+    // Close the statement
+    $stmt->close();
 
-$_SESSION['cadusername'] = $username;
+    // Retrieve the newly created user
+    $sql = "SELECT * FROM users WHERE username=?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($result) {
-    // User successfully signed up
-    return true;
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        session_start();
+        $_SESSION['user_id'] = $row['id'];
+        $_SESSION['cadusername'] = $row['username'];
+        $_SESSION['cademail'] = $row['email'];
+
+        // Close DB connection
+        $stmt->close();
+        $conn->close();
+        header("Location: steam-link.php"); // Redirect to a success page
+        exit;
+    }
 } else {
-    // Error occurred while signing up user
-    return false;
+    $errorMessage = "Error creating user: " . $stmt->error;
 }
 
-// Function to handle user logout
-function logoutUser() {
-    // Destroy Session to log out.
-    session_destroy();
-}
+// Close the statement and connection in case of failure
+$stmt->close();
+$conn->close();
+
+// Redirect to the setupfail page with error message
+header("Location: setupfail.php?error=" . urlencode($errorMessage));
+exit;
 ?>
