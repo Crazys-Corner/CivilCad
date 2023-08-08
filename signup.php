@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +11,14 @@
 <body>
   <div class="container">
     <div id="signup-failed-div">Signup Failed</div>
-    <form class="auth-form">
+    <form class="auth-form" action = "signup-backend.php" method = "POST">
       <h2>Sign Up</h2>
       <label for="username">Username:</label>
       <input class="form-input" type="text" id="username" name="username" required>
       <label for="password">Password:</label>
       <input class="form-input" type="password" id="password" name="password" required>
+      <label for="username">Email:</label>
+      <input class="form-input" type="text" id="email" name="email" required>
       <div class="remember-me">
         <input type="checkbox" id="remember" name="remember">
         <label for="remember">Remember me</label>

@@ -2,7 +2,6 @@
 
 // Page Dependency 
 require("verify.php");
-
 session_start();
 
 // Function to check if the user is already logged in
