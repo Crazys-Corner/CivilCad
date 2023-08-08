@@ -3,7 +3,11 @@
 require("verify.php");
 session_start();
 if(isset($_SESSION['64id'])) {
-// Establish a database connection
+// Misc Var Names set from Session Vars
+
+$PlayerName = $_SESSION['cadusername'];
+$PlayerEmail = $_SESSION['cademail'];
+    // Establish a database connection
 $conn = new mysqli(DatabaseAddress, DatabaseUsername, DatabasePassword, DatabaseName);
 
 // Check if the connection was successful

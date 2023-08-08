@@ -12,12 +12,9 @@ require("banking-backend.php");
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <a class="button-link" href="login.php">Login</a>
-      <a class="button-link" href="signup.php">Signup</a>
-    </div>
+
     <div class="dashboard">
-      <h1>Welcome, Ziad Gold</h1>
+      <h1>Welcome, <?php echo "$PlayerName"; ?></h1>
       <div class="account-details">
         <h2>Your ID: <?php echo "$user_id"; ?></h2>
         <div class="balance">

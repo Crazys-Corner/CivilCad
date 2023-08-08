@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         // Set the error message for login failure
         $error = 'Invalid credentials! Please try again.';
+        header("Location: login.php?error=Wrong%20Password");
     }
 }
 ?>
