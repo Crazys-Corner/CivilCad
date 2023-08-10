@@ -107,6 +107,9 @@ require ("verify.php")
               <label for="discord-link">Discord Link:</label>
               <input type="text" id="discord-link" name="discord-link" class="form-control">
             </div>
+              
+              <label for="easySend">Easy Send Pin Length:</label>
+              <input type="number" id="easy-Send" name="easySend">
           
             <button type="submit" class="btn btn-primary">Submit</button>
           

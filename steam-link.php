@@ -1,5 +1,5 @@
 <?php 
-require ("verify.php")
+require ("verify.php");
 header("location: https://steamcommunity.com/openid/login?openid.claimed_id=http://specs.openid.net/auth/2.0/identifier_select&openid.identity=http://specs.openid.net/auth/2.0/identifier_select&openid.mode=checkid_setup&openid.ns=http://specs.openid.net/auth/2.0&openid.realm=http://localhost&openid.return_to=http://localhost/civilcad/steamlink.php");
 ?>
 <!DOCTYPE html>

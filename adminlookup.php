@@ -65,7 +65,9 @@
     </style>
 </head>
 <body>
+
     <div class="container">
+    <h1 style="text-align: center;"><a style="color: black;" href="index.php">Index</a></h1> 
         <h1>Admin Lookup</h1>
         <form action="adminlookup-backend.php" method="post">
             <label for="id">User Steam64ID:</label>

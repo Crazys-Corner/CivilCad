@@ -11,6 +11,7 @@ require("banking-backend.php");
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <h1 style="text-align: center;"><a style="color: #FFFFFF;" href="index.php">Index</a></h1> 
   <div class="container">
 
     <div class="dashboard">

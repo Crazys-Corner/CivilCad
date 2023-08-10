@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $ServerIpAddress = $_POST['server-ip-address'];
     $ServerGame = $_POST['server-game'];
     $DiscordLink = $_POST['discord-link']; 
+    $easySend = $_POST['easySend'];
     // Generate the PHP code
     $phpCode = <<<EOT
 <?php
@@ -26,6 +27,7 @@ const ProductKey = '$ProductKey';
 const ServerIpAddress = '$ServerIpAddress';
 const ServerGame = '$ServerGame';
 const DiscordLink = '$DiscordLink';
+const easySendLength = '$easySend';
 EOT;
 
     // Save the generated code to a file
@@ -96,7 +98,8 @@ CREATE TABLE IF NOT EXISTS CB (
     owner VARCHAR(255) UNIQUE NOT NULL,
     personalAccountNumber VARCHAR(255) NOT NULL,
     balance VARCHAR(255) NOT NULL,
-    easySend VARCHAR(255) NOT NULL
+    easySend VARCHAR($easySend) NOT NULL,
+    lastLogin DATETIME DEFAULT CURRENT_TIMESTAMP
 );";
 // Execute the table creation query
 if ($mysqli->query($createTableSQL) === TRUE) {

@@ -48,4 +48,46 @@ function createComment($thread_id, $content, $author) {
     $stmt->close();
     $conn->close();
 }
+
+// Function to get comments for a specific thread
+// Function to get comments for a specific thread
+function getCommentsForThread($thread_id) {
+    $conn = getDBConnection();
+    $sql = "SELECT * FROM comments WHERE thread_id = ? ORDER BY created_at DESC";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $thread_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $comments = array();
+
+    while ($row = $result->fetch_assoc()) {
+        $comments[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $comments;
+}
+
+function searchThreads($search_query) {
+    $conn = getDBConnection();
+    $sql = "SELECT * FROM threads WHERE title LIKE ? OR content LIKE ? ORDER BY created_at DESC";
+    $stmt = $conn->prepare($sql);
+    $search_param = "%{$search_query}%"; // Wrap search query in %
+    $stmt->bind_param("ss", $search_param, $search_param);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $threads = array();
+
+    while ($row = $result->fetch_assoc()) {
+        $threads[] = $row;
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    return $threads;
+}
+
 ?>

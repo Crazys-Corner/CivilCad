@@ -1,12 +1,13 @@
 <?php
 const DatabaseName = 's50_cad';
 const DatabaseUsername = 'u50_t60RmgxbPz';
-const DatabasePassword = 'zAnCTcEJt47rfYT!z0i4X@Ta';
+const DatabasePassword = 'ftccE8Llq8!iN=sLBqNeEG05';
 const DatabaseAddress = 'database.civilhost.net:3306';
-const ServerName = 'AOC RP';
-const DefaultUsername = 'aocrp';
-const DefaultPassword = 'aocrp';
-const ProductKey = 'aocrp';
-const ServerIpAddress = 'aocrp';
+const ServerName = 'CAD TEST';
+const DefaultUsername = 'default';
+const DefaultPassword = '111';
+const ProductKey = '111';
+const ServerIpAddress = '1111';
 const ServerGame = 'Minecraft';
-const DiscordLink = 'aocrp';
+const DiscordLink = '1111';
+const easySendLength = '5';

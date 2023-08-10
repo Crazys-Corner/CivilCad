@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate the login credentials
     if (loginUser($username, $password)) {
         // Redirect to the user's dashboard or any other authenticated area
-        header('Location: bank.php');
+        header('Location: index.php');
         exit();
     } else {
         // Set the error message for login failure
